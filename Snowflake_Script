@@ -1,0 +1,32 @@
+Select *,
+    CASE
+    WHEN age BETWEEN 1 AND 12 THEN 'Child'
+    WHEN age BETWEEN 13 AND 19 THEN 'Teen'
+    WHEN age BETWEEN 20 AND 35 THEN 'Adult'
+    WHEN age BETWEEN 36 AND 55 THEN 'Older adults'
+    WHEN age > 55 THEN 'Senior citizen'
+    END AS Age_Demographics,
+
+CASE
+    WHEN TIME_TO_WATCH BETWEEN '00:00' AND '04:00' THEN 'Midnight Oil'
+    WHEN TIME_TO_WATCH BETWEEN '04:01' AND '07:00' THEN 'Early Morning'
+    WHEN TIME_TO_WATCH BETWEEN '07:01' AND '11:59' THEN 'Morning'
+    WHEN TIME_TO_WATCH BETWEEN '12:00' AND '15:59' THEN 'Afternoon'
+    WHEN TIME_TO_WATCH BETWEEN '16:00' AND '17:59' THEN 'Late Afternoon'
+    WHEN TIME_TO_WATCH BETWEEN '18:00' AND '20:59' THEN 'Peak time'
+    WHEN TIME_TO_WATCH BETWEEN '21:00' AND '23:59' THEN 'Evening'
+    END AS Time_Buckets,
+
+CASE
+    WHEN channel2 IN ('SawSee', 'Break in transmission', 'DStv Events 1') THEN 'Adhoc'
+    WHEN channel2 IN ('Boomerang', 'Cartoon Network') THEN 'Cartoons'
+    WHEN channel2 IN ('kykNET', 'Africa Magic', 'Vuzu', 'MK') THEN 'Entertainment'
+    WHEN Channel2 IN ('ICC Cricket World Cup 2011', 'Supersport Live Events', 'SuperSport Blitz', 'Live on SuperSport', 'Wimbledon') THEN 'Sports'
+    WHEN CHANNEL2 IN ('Trace TV', 'Channel O') THEN 'Music'
+    WHEN Channel2 IN ('CNN') THEN 'News'
+    WHEN Channel2 IN ('E! Entertainment')THEN 'Gossip'
+    END AS GENRE,
+
+From bright_tv_analysis.public.bright_tv_userid AS A
+Full Outer Join bright_tv_analysis.public.bright_tv_viewership AS B 
+On A.USERID = B.USERID
